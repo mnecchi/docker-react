@@ -1,5 +1,3 @@
-sudo: required
-
 services:
   - docker
 
@@ -8,3 +6,16 @@ before_install:
 
 script:
   - docker run -e CI=true mnecchi/docker-react yarn test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-2"
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-eu-west-2-159843085935"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  
